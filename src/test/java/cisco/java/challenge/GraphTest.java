@@ -25,7 +25,9 @@ class GraphTest {
 
   @Test
   void getChildrenTest() {
-    Node node = graph.loockupNode("A").get();
+    Node node = graph.loockupNode("B").get();
+    GNode[] expected = {new Node("E"), new Node("F")};
     GNode[] actual = node.getChildren();
-    }
+    assertArrayEquals(expected, actual);
+  }
 }

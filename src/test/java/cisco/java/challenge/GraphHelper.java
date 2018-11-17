@@ -48,7 +48,6 @@ A
 
   public static List<GNode> createReferenceList() {
     List<GNode> list = new ArrayList<>();
-
     return list;
   }
 }

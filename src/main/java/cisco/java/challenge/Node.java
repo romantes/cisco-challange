@@ -1,7 +1,5 @@
 package cisco.java.challenge;
 
-import org.junit.platform.commons.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +7,6 @@ import java.util.Objects;
 public class Node implements GNode {
   private String name;
   private List<Edge> edges;
-  private List<Node> nodes;
 
   public Node(String name) {
     this.name = name;
@@ -24,14 +21,26 @@ public class Node implements GNode {
     return edges;
   }
 
-  public void setEdges(List<Edge> edges) {
-    this.edges = edges;
+  public GNode[] getChildren() {
+    if (Objects.isNull(edges)) return new GNode[0];
+    return traverse();
   }
 
+  GNode[] traverse() {
+    ArrayList<GNode> list = new ArrayList<>();
+    if (Objects.isNull(edges)) return new GNode[0];
+    traverse(this, list);
+    return list.toArray(new GNode[0]);
+  }
 
-  public GNode[] getChildren() {
-    if(Objects.isNull(edges)) return new GNode[0];
-    return null;
+  void traverse(Node node, List<GNode> list) {
+    if (Objects.nonNull(node)) {
+      for (Edge e : node.getEdges()) {
+        if (Objects.nonNull(e.getEnd()))
+          list.add(e.getEnd());
+        traverse(e.getEnd(), list);
+      }
+    }
   }
 
   @Override

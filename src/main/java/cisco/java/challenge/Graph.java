@@ -34,4 +34,6 @@ public class Graph {
     return result;
   }
 
+  //TODO public ArrayList paths(GNode node);
+  //TODO public ArrayList walkGraph(GNode)
 }
