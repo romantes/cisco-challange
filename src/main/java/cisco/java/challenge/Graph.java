@@ -1,23 +1,16 @@
 package cisco.java.challenge;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Graph {
-  private List<Node> nodes;
+  private ArrayList<Node> nodes;
 
   Graph() {
     nodes = new ArrayList<>();
   }
 
-  public List<Node> getNodes() {
+  public ArrayList<Node> getNodes() {
     return nodes;
-  }
-
-  public void setNodes(List<Node> nodes) {
-    this.nodes = nodes;
   }
 
   // TODO corner cases
@@ -26,12 +19,10 @@ public class Graph {
       nodes.add(node);
       return;
     }
-    if (!isConnectionExists(parent, node)) {
       Edge edge = new Edge();
       edge.setEnd(node);
       parent.getEdges().add(edge);
       nodes.add(node);
-    }
   }
 
   // TODO corner cases
@@ -43,8 +34,4 @@ public class Graph {
     return result;
   }
 
-  // TODO
-  boolean isConnectionExists(Node parent, Node node) {
-    return false;
-  }
 }

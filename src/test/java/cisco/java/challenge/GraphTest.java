@@ -24,7 +24,8 @@ class GraphTest {
   }
 
   @Test
-  void walkGraphTest() {
-
-  }
+  void getChildrenTest() {
+    Node node = graph.loockupNode("A").get();
+    GNode[] actual = node.getChildren();
+    }
 }
