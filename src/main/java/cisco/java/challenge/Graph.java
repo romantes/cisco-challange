@@ -1,5 +1,7 @@
 package cisco.java.challenge;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.*;
 
 public class Graph {
@@ -34,6 +36,33 @@ public class Graph {
     return result;
   }
 
-  //TODO public ArrayList paths(GNode node);
   //TODO public ArrayList walkGraph(GNode)
+
+   List<List<GNode>> paths(GNode node) {
+    Optional<Node> startNode = loockupNode(node.getName());
+    List<List<GNode>> lists = new ArrayList<>();
+    if(!startNode.isPresent()) return lists;
+    //TODO
+    return lists;
+  }
+
+  List<GNode> path(Node node) {
+    if(Objects.isNull(node)) return null;
+    List<GNode> path = new ArrayList<>();
+    path.add(node);
+
+    if(Objects.nonNull(node.getEdges()) && CollectionUtils.isNotEmpty(node.getEdges())) {
+      path(node, path);
+    }
+    return path;
+  }
+
+  void path(Node node, List<GNode> list) {
+   if(CollectionUtils.isNotEmpty(node.getEdges())){
+    Edge e = node.getEdges().get(0);
+       list.add(e.getEnd());
+       if(CollectionUtils.isEmpty(e.getEnd().getEdges())) return;
+       path(e.getEnd(), list);
+     }
+   }
 }
