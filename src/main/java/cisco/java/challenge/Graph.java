@@ -15,7 +15,6 @@ public class Graph {
     return nodes;
   }
 
-  // TODO corner cases
   void add(Node parent, Node node) {
     if(Objects.isNull(parent)) {
       nodes.add(node);
@@ -27,42 +26,43 @@ public class Graph {
       nodes.add(node);
   }
 
-  // TODO corner cases
-  Optional<Node> loockupNode(String name) {
+  Optional<Node> lookupNode(String name) {
+   if(Objects.isNull(name)) return Optional.empty();
     Optional<Node> result =
     nodes.stream()
             .filter(node -> node.getName().equals(name))
             .findFirst();
     return result;
   }
-
-  //TODO public ArrayList walkGraph(GNode)
-
-   List<List<GNode>> paths(GNode node) {
-    Optional<Node> startNode = loockupNode(node.getName());
-    List<List<GNode>> lists = new ArrayList<>();
-    if(!startNode.isPresent()) return lists;
-    //TODO
-    return lists;
+  // need to be specified
+  public ArrayList walkGraph(GNode node) {
+    return nodes;
   }
 
-  List<GNode> path(Node node) {
-    if(Objects.isNull(node)) return null;
-    List<GNode> path = new ArrayList<>();
-    path.add(node);
+  List<List<GNode>> paths(GNode node) {
+    Optional<Node> startNode = lookupNode(node.getName());
+    List<List<GNode>> paths = new ArrayList<>();
+    if(!startNode.isPresent()) return paths;
+    paths(paths, new ArrayList<>(), startNode.get());
+    return paths;
+  }
 
-    if(Objects.nonNull(node.getEdges()) && CollectionUtils.isNotEmpty(node.getEdges())) {
-      path(node, path);
+  private void paths(List<List<GNode>> paths, List<GNode> path, Node node) {
+    List<GNode> localPath = new ArrayList<>(path);
+    localPath.add(node);
+
+    if (isLeaf(node)) {
+      paths.add(localPath);
+      return;
     }
-    return path;
+
+    for (Edge e : node.getEdges()) {
+        paths(paths, localPath, e.getEnd());
+    }
   }
 
-  void path(Node node, List<GNode> list) {
-   if(CollectionUtils.isNotEmpty(node.getEdges())){
-    Edge e = node.getEdges().get(0);
-       list.add(e.getEnd());
-       if(CollectionUtils.isEmpty(e.getEnd().getEdges())) return;
-       path(e.getEnd(), list);
-     }
-   }
+  private boolean isLeaf(Node node) {
+    return CollectionUtils.isEmpty(node.getEdges());
+  }
+
 }
