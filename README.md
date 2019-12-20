@@ -78,3 +78,5 @@ output might look like this:
 
 For this input file, the word "a" occured 17 times, "the" 14 times, etc.
 
+to run graph test use mvn test
+to run shell program /bin/bash  /Users/apple/Java/cisco-challange/wordCount.sh {your text file}
